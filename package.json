@@ -1,0 +1,22 @@
+{
+  "name": "last_jest_test",
+  "version": "1.0.0",
+  "description": "![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnnikaW-dev/last_jest_test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnnikaW-dev/last_jest_test/issues"
+  },
+  "homepage": "https://github.com/AnnikaW-dev/last_jest_test#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
