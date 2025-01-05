@@ -1,18 +1,24 @@
-const addition = require("../game");
+/**
+ * @jest-environment jsdom
+ */
 
-describe("Calculator", () => {
-    describe("Addition function", () => {
-        test("should return 42 for 20 + 22", () => {
-            expect(addition(20, 22)).toBe(42);
-        });
+const buttonClick = require("../game");
+
+beforeAll(() => {
+    let fs = require("fs");
+    let fileContents = fs.readFileSync("index.html", "utf-8");
+    document.open();
+    document.write(fileContents);
+    document.close();
+});
+
+describe("DOM tests", () => {
+    test("Expects content to change", () => {
+        buttonClick();
+        expect(document.getElementById("par")
+            .innerHTML).toEqual("You Clicked");
     });
-    describe("Subtract function", () => {
-
-    });
-    describe("Multiply function", () => {
-
-    });
-    describe("Divide function", () => {
-
+    test("h1 should exist", () => {
+        expect(document.getElementsByTagName("h1").length).toBe(1);
     });
 });

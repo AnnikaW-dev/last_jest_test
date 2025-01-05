@@ -1,5 +1,5 @@
-function addition() {
-    return 42;
+function buttonClick() {
+    document.getElementById("par").innerHTML = "You Clicked";
 }
 
-module.exports = addition;
+module.exports = buttonClick;
