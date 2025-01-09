@@ -13,10 +13,12 @@ function newGame() {
     for (let circle of document.getElementsByClassName("circle")) {
         if (circle.getAttribute("data-listener") !== "true") {
             circle.addEventListener("click", (e) => {
-                let move = e.target.getAttribute("id");
-                lightsOn(move);
-                game.playerMoves.push(move);
-                playerTurn();
+                    let move = e.target.getAttribute("id");
+                    game.lastButton = move; 
+                    lightsOn(move);
+                    game.playerMoves.push(move);
+                    playerTurn();
+                
             });
             circle.setAttribute("data-listener", "true");
         }
@@ -31,17 +33,6 @@ function addTurn() {
     showTurns();
 }
 
-function showTurns() {
-    game.turnNumber = 0;
-    let turns = setInterval(function () {
-        lightsOn(game.currentGame[game.turnNumber]);
-        game.turnNumber++;
-        if (game.turnNumber >= game.currentGame.length) {
-            clearInterval(turns);
-        }
-    }, 800);
-}
-
 function lightsOn(circ) {
     document.getElementById(circ).classList.add("light");
     setTimeout(function () {
@@ -53,4 +44,27 @@ function showScore() {
     document.getElementById("score").innerText = game.score;
 }
 
-module.exports = { game, newGame, showScore, addTurn, lightsOn, showTurns };
+function showTurns() {
+    game.turnNumber = 0;
+    let turns = setInterval(function () {
+        lightsOn(game.currentGame[game.turnNumber]);
+        game.turnNumber++;
+        if (game.turnNumber >= game.currentGame.length) {
+            clearInterval(turns);
+        }
+    }, 800);
+}
+ 
+function playerTurn() {
+    let i = game.playerMoves.length - 1;
+        if (game.currentGame[i] === game.playerMoves[i]) {
+            if (game.currentGame.length == game.playerMoves.length) {
+                game.score++;
+                showScore();
+                addTurn();
+            }
+        }
+    
+}
+
+module.exports = { game, newGame, showScore, addTurn, lightsOn, showTurns, playerTurn };
