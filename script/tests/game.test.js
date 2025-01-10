@@ -2,8 +2,11 @@
  * @jest-environment jsdom
  */
 
+
 const { game, newGame, showScore, addTurn, lightsOn, showTurns, playerTurn } = require("../game");
 
+
+jest.spyOn(window, "alert").mockImplementation(() => { });
 beforeAll(() => {
     let fs = require("fs");
     let fileContents = fs.readFileSync("index.html", "utf-8");
@@ -30,6 +33,15 @@ describe("game object contains correct keys", () => {
     });
     test("turnNumber key exists", () => {
         expect("turnNumber" in game).toBe(true);
+    });
+    test("lastButton key exists", () => {
+        expect("lastButton" in game).toBe(true);
+    });
+    test("turnInProgress key to exists", () => {
+        expect("turnInProgress" in game).toBe(true);
+    });
+    test("turnInProgress key value is false", () => {
+        expect("turnInProgress" in game).toBe(true);
     });
     test("expect data-listener to be true", () => {
         newGame();
@@ -93,4 +105,19 @@ describe("gameplay works correctly", () => {
         playerTurn();
         expect(game.score).toBe(1);
     });
+    test("should cal an alertt if the move is wrong", () => {
+        game.playerMoves.push("wrong");
+        playerTurn();
+        expect(window.alert).toBeCalledWith("Wrong move!");
+    });
+    test("Should call showTurns function and check if the tune progress is true", () => {
+        showTurns();
+        expect(game.turnInProgress).toBe(true);
+    })
+    test("clicking during computerr sequence should fail", () => {
+        showTurns();
+        game.lastButton ="";       //reset the last button key so that should be empty 
+        document.getElementById("button2").click();  //her I cll the click function to click the button2 for the test
+        expect(game.lastButton).toEqual("");    // Checks that the lastButton is still empty so the a bove click hasnot been registered.
+    })
 });
